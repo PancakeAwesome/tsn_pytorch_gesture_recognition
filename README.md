@@ -1,20 +1,24 @@
-# TSN-Pytorch
+# TSN-Pytorch-gesture-recognition
+This a gesture recognition experiment in vedio for a logitics project.We use TSN model to discern action from a video in trunk.We can get driver's driving video by camera in the trunk to judge whether the driver has illegal manner when driving.The origin paper can be found [here](https://arxiv.org/abs/1506.01497). For more detail about the paper and code, see this [blog][1]
 
-*Now in experimental release, suggestions welcome*.
 
-**Note**: always use `git clone --recursive https://github.com/yjxiong/tsn-pytorch` to clone this project. 
-Otherwise you will not be able to use the inception series CNN archs. 
+***
+# setup
+- requirements: pytorch2.3, opencv-python, opencv-c++
+we use opencv-c++ to extract optical flow
+# demo
+- put your images in data/demo, the results will be saved in data/results, and run demo in the root 
+```shell
+python ..//tools/demo.py
+```
+***
+# training
+## prepare data
+- We use own private data to train tsn model, but sorry we couldn't open these data. You can use International public dataset,such as UFC101,hmdb51 e.g.
+- Second, you need to download pretrain models adn put it in models. 
+- We use three input modes to train our models,for RGB mode, optical mode, RGB-Diff mode.
 
-This is a reimplementation of temporal segment networks (TSN) in PyTorch. All settings are kept identical to the original caffe implementation.
-
-For optical flow extraction and video list generation, you still need to use the original [TSN codebase](https://github.com/yjxiong/temporal-segment-networks).
-
-## Training
-
-To train a new model, use the `main.py` script.
-
-The command to reproduce the original TSN experiments of RGB modality on UCF101 can be 
-
+for RGB mode:
 ```bash
 python main.py ucf101 RGB <ucf101_rgb_train_list> <ucf101_rgb_val_list> \
    --arch BNInception --num_segments 3 \

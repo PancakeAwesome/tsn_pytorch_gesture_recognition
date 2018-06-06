@@ -53,6 +53,7 @@ class TSN(nn.model):
         feature_dim = self._prepare_tsn(num_class)
         # feature_dim是网络最后一层的输入feature map的channel数
 
+        # 迁移学习的第一种方式：利用conv网络初始化参数
         # 交叉模式预训练技术：利用RGB模型初始化时间网络
         # 如果你的输入数据是optical flow或RGBDiff，那么还会对网络结构做修改，分别调用_construct_flow_model方法和_construct_diff_model方法来实现的，主要差别在第一个卷积层，因为该层的输入channel依据不同的输入类型而变化
         if self.modality == 'Flow':
@@ -343,3 +344,15 @@ class TSN(nn.model):
         output = self.consensus(base_out)
         # tensor去除维度大小为1的维度
         return output.squeeze(1)
+
+    def get_augmentation(self):
+        # 数据增强
+        if self.modality == 'RGB':
+            return torchvision.transforms.Compose([GroupMultiScaleCrop(self.input_size, [1, .875, .75, .66]),
+                                                   GroupRandomHorizontalFlip(is_flow=False)])
+        elif self.modality == 'Flow':
+            return torchvision.transforms.Compose([GroupMultiScaleCrop(self.input_size, [1, .875, .75]),
+                                                   GroupRandomHorizontalFlip(is_flow=True)])
+        elif self.modality == 'RGBDiff':
+            return torchvision.transforms.Compose([GroupMultiScaleCrop(self.input_size, [1, .875, .75]),
+                                                   GroupRandomHorizontalFlip(is_flow=False)])

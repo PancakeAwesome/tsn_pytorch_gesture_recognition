@@ -53,6 +53,8 @@ def main():
     input_std = model.input_std
     # 修改RGB模型第一个卷积层的权重来处理光流场的输入
     policies = model.get_optim_policies()
+    # 获得数据转换函数
+    train_augmentation = model.get_augmentation()
 
     # 设置多GPU训练模型
     model = torch.nn.DataParaller(model, device_ids = args.gpus).cuda()

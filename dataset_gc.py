@@ -76,7 +76,7 @@ class TSNDataSet(data.Dataset):
         images = list()
         for seg_ind in indices:
             p = int(seg_ind)
-            # 对于RGB而言，self.new_length是1，这样images的长度就是indices的长度；对于Flow而言，self.new_length是5，这样images的长度就是indices的长度乘以(5*2)？
+            # 对于RGB而言，self.new_length是1，这样images的长度就是indices的长度；对于Flow而言，self.new_length是5，这样images的长度就是indices的长度乘以(5*2)
             for i in range(self.new_length):
                 # 对于RGB或RGBDiff数据，返回的seg_imgs是一个长度为1的列表
                 # 对于Flow数据，返回的seg_imgs是一个长度为2的列表，然后将读取到的图像数据合并到images这个列表中
