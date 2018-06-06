@@ -4,7 +4,7 @@ This a gesture recognition experiment in vedio for a logitics project.We use TSN
 
 ***
 # setup
-- requirements: pytorch2.3, opencv-python, opencv-c++
+- requirements: pytorch1.0, opencv-python, opencv-c++
 we use opencv-c++ to extract optical flow
 # demo
 - put your images in data/demo, the results will be saved in data/results, and run demo in the root 
